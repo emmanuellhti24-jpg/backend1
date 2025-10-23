@@ -26,10 +26,22 @@ router.get("/info/:c/:texto", (req, res)=>{
 
 // NUEVA RUTA PARA CONTACTO
 router.get("/contacto", (req, res)=>{
-    res.render("contacto", {
-        title: "Contáctanos",
-        page: "contacto"
-    })
+    res.render("contacto")
 })
+
+router.post("/contacto",async(req,res)=>{
+    var nombre = req.body.nombre
+    var apellido = req.body.apellido
+    var correo = req.body.correo
+    var edad=req.body.edad
+
+    console.log("datos resibidos: ", req.body)
+
+    const respuestaMongo=await nuevoContacto({nombre,edad})
+    console.log(respuestaMongo)
+
+    res.render("recibirdatos",{nombre,apellido,correo,edad})
+})
+
 
 export default router
